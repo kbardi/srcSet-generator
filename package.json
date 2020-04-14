@@ -1,0 +1,15 @@
+{
+  "name": "srcset-generator",
+  "version": "1.0.0",
+  "description": "Image srcSet generator and webp generator",
+  "main": "index.js",
+  "dependencies": {
+    "sharp": "^0.25.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kevin Bardi",
+  "license": "ISC"
+}
