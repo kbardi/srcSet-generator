@@ -15,7 +15,7 @@ Please consider to use 2 buckets, one for original src images, and another one f
 ## The function is the one you can see in [**index.js**](index.js) file
 - We use `sharp` to generate images with different formats and sizes.
 - We use `aws-sdk` to get original uploaded image (getObject), and to upload (putObject) the image in the new bucket.
-- Before we start, we need to install sharp as an external library. If you are using **Linux** you can run directly `npm install sharp` but if you are on **macOS** you need to run `npm install --arch=x64 --platform=linues sharp` as it recommends ins [Sharp docs](https://sharp.pixelplumbing.com/install#aws-lambda)
+- Before we start, we need to install sharp as an external library. If you are using **Linux** you can run directly `npm install sharp` but if you are on **macOS** you need to run `npm install --arch=x64 --platform=linux sharp` as it recommends ins [Sharp docs](https://sharp.pixelplumbing.com/install#aws-lambda)
 - The first thing we need to do is get bucket name and file name from the file which triggered the function. It comes on event property.
 - After that we have to check it has a type, and that type is an image type (jpg or png)
 - As I said before, we get the object buffer (originImage) using aws-sdk.
