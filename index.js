@@ -30,30 +30,6 @@ exports.handler = async (event, context, callback) => {
     }
     const folder    = /[^/]*$/.exec(fileName)[0] + imageType;
 
-    if (fileName.endsWith('vw') || fileName.endsWith('_nocompression')) {
-        console.log(`Image not processed: ${imageType}`);
-        return;
-    }
-
-    if (fileName.indexOf('/Kevin') === -1) {
-        console.log(`Image not processed: Outside Kevin folder`);
-        return;
-    }
-
-    // Download the image from the S3 source bucket. 
-    try {
-        const params = {
-            Bucket: srcBucket,
-            Key: srcKey
-        };
-        var origimage = await s3.getObject(params).promise();
-
-    } catch (error) {
-        console.log(error);
-        return;
-    }
-
-
     // set thumbnail width. Resize will set the height automatically to maintain aspect ratio.
     const sizes = [
         {
@@ -81,6 +57,33 @@ exports.handler = async (event, context, callback) => {
             suffix: '-xl',
         },
     ];
+
+    if (
+        fileName.endsWith('vw')
+        || fileName.endsWith('_nocompression')
+        || sizes.some(size => fileName.endsWith(size.suffix))
+    ) {
+        console.log(`Image not processed: ${imageType}`);
+        return;
+    }
+
+    if (fileName.indexOf('/Kevin') === -1) {
+        console.log(`Image not processed: Outside Kevin folder`);
+        return;
+    }
+
+    // Download the image from the S3 source bucket. 
+    try {
+        const params = {
+            Bucket: srcBucket,
+            Key: srcKey
+        };
+        var origimage = await s3.getObject(params).promise();
+
+    } catch (error) {
+        console.log(error);
+        return;
+    }
 
     // Use the Sharp module to resize the image and save in a buffer.
     try {
@@ -145,7 +148,7 @@ exports.handler = async (event, context, callback) => {
 
     // Upload the thumbnail image to the destination bucket
     try {
-        const dstPath = fileName + "/" + folder + "_";
+        const dstPath = fileName + "/" + folder;
         const promises = buffers.map((buffer, index) => {
             return s3.putObject({
                 ...destParams,
