@@ -29,13 +29,13 @@ Now we have the function as we want to use it, so it is time to upload it to AWS
 1. Now you need to configure `aws cli` in your computer if you didn't do it before. Follow [AWS instructions](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) for it.
 1. Now you can create your Lambda function running this command
 ```shell
-aws lambda create-function --function-name SrcSet-Generator \
+aws lambda create-function --function-name srcSet-Generator \
 --zip-file fileb://function.zip --handler index.handler --runtime nodejs12.x \
 --timeout 300 --memory-size 1024 \
 --role arn:aws:iam::GENERATED_ROLE_ID:role/lambda-s3-role --region REGION_STRING
 ```
 where we use:
-- **SrcSet-Generator**: Name of our new Lambda function, use the name that you want.
+- **srcSet-Generator**: Name of our new Lambda function, use the name that you want.
 - **fileb://function.zip**: It is the name we use in the first step for our zip file. In some cases you need to use absolute path, and if you use a different name for your zip, please update this also in here.
 - **index.handler**: It is our index.js file, we need to specify index is the default file to be loaded.
 - **nodejs12.x**: We use node version 12.x, you can change that if you want, but I'm not sure if it is compatible with other versions.
@@ -46,7 +46,7 @@ where we use:
 
 ## Adds permissions to your Lambda function
 ```
-aws lambda add-permission --function-name SrcSet-Generator --principal s3.amazonaws.com \
+aws lambda add-permission --function-name srcSet-Generator --principal s3.amazonaws.com \
 --statement-id s3invoke --action "lambda:InvokeFunction" \
 --source-arn arn:aws:s3:::BUCKET_NAME \
 --source-account ACCOUNT_ID --region REGION_STRING

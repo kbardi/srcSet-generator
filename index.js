@@ -56,19 +56,19 @@ exports.handler = async (event, context, callback) => {
             quality: 100,
             suffix: '-xl',
         },
+        {
+            name: 'placeholder',
+            width: 1440,
+            quality: 30,
+            suffix: '-pl',
+        },
     ];
 
     if (
-        fileName.endsWith('vw')
-        || fileName.endsWith('_nocompression')
+        fileName.endsWith('_nocompression')
         || sizes.some(size => fileName.endsWith(size.suffix))
     ) {
         console.log(`Image not processed: ${imageType}`);
-        return;
-    }
-
-    if (fileName.indexOf('/Kevin') === -1) {
-        console.log(`Image not processed: Outside Kevin folder`);
         return;
     }
 
