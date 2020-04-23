@@ -28,7 +28,7 @@ exports.handler = async (event, context, callback) => {
         console.log(`Unsupported image type: ${imageType}`);
         return;
     }
-    const folder    = /[^/]*$/.exec(fileName)[0] + imageType;
+    const folder    = /[^/]*$/.exec(fileName)[0];
 
     // set thumbnail width. Resize will set the height automatically to maintain aspect ratio.
     const sizes = [
@@ -41,13 +41,13 @@ exports.handler = async (event, context, callback) => {
         {
             name: 'tablet',
             width: 768,
-            quality: 60,
+            quality: 50,
             suffix: '-md',
         },
         {
             name: 'small-laptop',
             width: 1080,
-            quality: 80,
+            quality: 60,
             suffix: '-lg',
         },
         {
@@ -147,8 +147,8 @@ exports.handler = async (event, context, callback) => {
     };
 
     // Upload the thumbnail image to the destination bucket
+    const dstPath = fileName + "/" + folder;
     try {
-        const dstPath = fileName + "/" + folder;
         const promises = buffers.map((buffer, index) => {
             return s3.putObject({
                 ...destParams,
